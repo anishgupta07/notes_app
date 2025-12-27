@@ -20,7 +20,7 @@ The app allows users to **create, edit, delete, and search notes**, with all dat
 
 - **Language:** Kotlin  
 - **Database:** Room Database  
-- **UI:** XML / Jetpack Compose  
+- **UI:** Jetpack Compose  
 - **Android Components:**
   - ViewModel  
   - LiveData / State  
