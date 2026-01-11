@@ -26,3 +26,9 @@ The app allows users to **create, edit, delete, and search notes**, with all dat
   - LiveData / State  
   - RecyclerView / LazyColumn  
 
+## 📸 App Screenshots
+
+<p align="center">
+  <img src="screenshots/notes-screen.jpg" width="220" />
+  <img src="screenshots/add-notes-screen.jpg" width="220" />
+</p>
