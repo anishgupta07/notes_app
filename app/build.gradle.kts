@@ -2,11 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("kotlin-kapt")
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
-
-// Use old-style apply so the plugin from `buildscript` is picked up
-apply(plugin = "com.google.dagger.hilt.android")
 
 android {
     namespace = "com.example.jetnotes"
@@ -45,33 +43,24 @@ android {
     buildFeatures {
         compose = true
     }
-    buildToolsVersion = "35.0.0"
+
 }
 
 dependencies {
 
-    implementation(libs.androidx.compose.material3)
-    // -------------------------------
-    // Versions
-    // -------------------------------
-    val hiltVersion = "2.51.1"
-    val roomVersion = "2.6.1"
-    val lifecycleVersion = "2.7.0"
-    val navVersion = "2.7.7"
-
     // -------------------------------
     // ROOM
     // -------------------------------
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     // -------------------------------
     // LIFECYCLE
     // -------------------------------
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 
     // -------------------------------
     // CORE + COMPOSE
@@ -83,21 +72,21 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
+    implementation(libs.androidx.compose.material3)
     implementation("androidx.compose.material:material-icons-extended:1.6.7")
 
     // -------------------------------
     // NAVIGATION
     // -------------------------------
-    implementation("androidx.navigation:navigation-compose:$navVersion")
+    implementation(libs.androidx.navigation.compose)
 
     // -------------------------------
     // HILT (ONLY CORRECT DEPENDENCIES)
     // -------------------------------
-    implementation("com.google.dagger:hilt-android:$hiltVersion")
-    kapt("com.google.dagger:hilt-compiler:$hiltVersion")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // -------------------------------
     // TESTING
@@ -114,6 +103,6 @@ dependencies {
 }
 
 // KAPT configuration – helps fix NonExistentClass annotation issues
-kapt {
-    correctErrorTypes = true
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
 }
